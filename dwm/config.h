@@ -6,23 +6,23 @@
 #define BROWSER "librewolf"
 
 /* appearance */
-static unsigned int borderpx  = 2;        /* border pixel of windows */
-static unsigned int snap      = 32;       /* snap pixel */
+static unsigned int borderpx  = 1;        /* border pixel of windows */
+static unsigned int snap      = 16;       /* snap pixel */
 static unsigned int gappih    = 10;       /* horiz inner gap between windows */
 static unsigned int gappiv    = 5;       /* vert inner gap between windows */
 static unsigned int gappoh    = 5;       /* horiz outer gap between windows and screen edge */
-static unsigned int gappov    = 20;       /* vert outer gap between windows and screen edge */
+static unsigned int gappov    = 15;       /* vert outer gap between windows and screen edge */
 static int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
-static char *fonts[]          = { "3270:size=12", "nerdfont:size=12","NotoColorEmoji:pixelsize=10:antialias=true:autohint=true"  };
-static char normbgcolor[]           = "#222222"; //
-static char normbordercolor[]       = "#000000"; // Normal border color
-static char normfgcolor[]           = "#ffffff"; // foreground Color
-static char selfgcolor[]            = "#ffffff"; // idk probably like wallpaper color
-static char selbordercolor[]        = "#400c60"; // Border color when hovering / focus
-static char selbgcolor[]            = "#300948"; // Bar color bg
+static char *fonts[]          = { "monospace:size=10", "NotoColorEmoji:pixelsize=10:antialias=true:autohint=true"  };
+static char normbgcolor[]           = "#100009"; // Exterior BG
+static char normbordercolor[]       = "#000001";
+static char normfgcolor[]           = "#47E60B";
+static char selfgcolor[]            = "#F33878";
+static char selbordercolor[]        = "#700000";
+static char selbgcolor[]            = "#100009";
 static char *colors[][3] = {
        /*               fg           bg           border   */
        [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
@@ -42,10 +42,7 @@ static Sp scratchpads[] = {
 };
 
 /* tagging */
-static const char *tags[] = { "","", "", "", "", "","", "󱎓", "" };
-
-// autostart
-
+static const char *tags[] = { "", "󰈹", "", "", "", "󰃣", "", "󱎓", "" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -53,13 +50,7 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	*/
 	/* class    instance      title       	 tags mask    isfloating   isterminal  noswallow  monitor */
-	{ "Gimp",     NULL,       NULL,          6,           1,           0,          0,         -1 },
-	{ "Firefox",  NULL,       NULL,          2,           0,           0,          0,         -1 },
-	{ "Discord",  NULL,       NULL,          4,           1,           0,          0,         -1 },
-	{ "Steam",    NULL,       NULL,          5,           1,           0,          0,         -1 },
-	{ "MCserver", NULL,       NULL,          9,           0,           1,          0,         -1 },
-//	{ "",         NULL,       NULL,          6,           1,           0,          0,         -1 },
-//	{ "Gimp",     NULL,       NULL,          6,           1,           0,          0,         -1 },
+	{ "Gimp",     NULL,       NULL,          1 << 8,      0,           0,          0,         -1 },
 	{ TERMCLASS,  NULL,       NULL,       	 0,           0,           1,          0,         -1 },
 	{ NULL,       NULL,       "Event Tester", 0,          0,           0,          1,         -1 },
 	{ TERMCLASS,  "floatterm", NULL,       	 0,           1,           1,          0,         -1 },
@@ -149,7 +140,6 @@ static const Key keys[] = {
 	STACKKEYS(MODKEY|ShiftMask,                    push)
 	/* { MODKEY|ShiftMask,		XK_Escape,     spawn,	               SHCMD("") }, */
 	{ MODKEY,			XK_grave,      spawn,	               {.v = (const char*[]){ "dmenuunicode", NULL } } },
-
 	/* { MODKEY|ShiftMask,		XK_grave,      togglescratch,	       SHCMD("") }, */
 	TAGKEYS(			XK_1,          0)
 	TAGKEYS(			XK_2,          1)
@@ -169,12 +159,23 @@ static const Key keys[] = {
 	{ MODKEY,			XK_BackSpace,  spawn,                  {.v = (const char*[]){ "sysact", NULL } } },
 	{ MODKEY|ShiftMask,		XK_BackSpace,  spawn,                  {.v = (const char*[]){ "sysact", NULL } } },
 
-	// My shit
 
-	{ MODKEY,		XK_v,          spawn,                  {.v = (const char*[]){ "virtualbox", NULL } } },
-	{ MODKEY,		XK_c,          spawn,                  {.v = (const char*[]){ "obsidian", NULL } } },
-	{ MODKEY,               XK_s,          spawn,	               {.v = (const char*[]){ "slock", NULL } } },
-	//{ MODKEY|ShiftMask,		XK_q,          spawn,                  {.v = (const char*[]){ "sysact", NULL } } },
+	// USER DEFINITIONS
+	#define VM "virtualbox"
+	#define SLOCK "slock"
+	#define NOTES "obsidian"
+	// USER MODKEY
+
+/*	 Example of browser spawn function. XK is the key, spawn is the action,
+	{.v =(const char[]){ BROWSER, NULL } } } is the name of the application we are trying to spawn, we use #define to shortern the application name / generalize it.
+        ------------------------------------------------------------------------------------------------------------------
+	{ MODKEY,			XK_w,          spawn,                  {.v = (const char*[]){ BROWSER, NULL } } },
+*/
+
+	{ MODKEY, 			XK_v,		spawn,			{.v = (const char*[]){ VM, NULL } } },
+        { MODKEY, 			XK_s,		spawn,			{.v = (const char*[]){ SLOCK, NULL } } },
+        { MODKEY, 			XK_c,		spawn,			{.v = (const char*[]){ NOTES, NULL } } },
+
 
 
 	{ MODKEY,			XK_Tab,        view,                   {0} },
