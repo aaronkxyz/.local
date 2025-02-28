@@ -1,6 +1,6 @@
 # Schloprice
-# This is my adaption of Luke Smiths dot configs and dwm setup
 
+This is an adapted version of Luke Smith's rice.
 
 - Very useful scripts are in `~/.local/bin/`
 - Settings for:
